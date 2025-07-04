@@ -1,6 +1,6 @@
 # Graph_Visualization
 
-This repository visualizes **linked argumentative structures** — claims and premises — as interactive graphs using [Cytoscape.js](https://js.cytoscape.org/). It is designed to work alongside the [argument-linking-llm](https://github.com/your-org/argument-linking-llm) 
+This repository visualizes **linked argumentative structures** — claims and premises — as interactive graphs using [Cytoscape.js](https://js.cytoscape.org/). It is designed to work alongside the [argument_linking_llm](https://github.com/Horizontal-Labs/synapse-sparks/blob/main/LLM_Linking.ipynb) 
 
 ---
 
