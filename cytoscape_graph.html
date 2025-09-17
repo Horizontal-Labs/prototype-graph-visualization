@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Argument Graph</title>
+  <script src="https://unpkg.com/cytoscape@3.21.1/dist/cytoscape.min.js"></script>
+  <style>
+    #cy {
+      width: 100%;
+      height: 95vh;
+      display: block;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Argument Graph (Claims and Premises)</h2>
+  <div id="cy"></div>
+
+  <script>
+    const data = {
+  "nodes": [
+    {
+      "data": {
+        "id": "EVs have zero tailpipe emissions.",
+        "type": "premise",
+        "stance": "pro"
+      }
+    },
+    {
+      "data": {
+        "id": "Electric vehicles are better for the environment.",
+        "type": "claim",
+        "stance": "neutral"
+      }
+    },
+    {
+      "data": {
+        "id": "EV battery mining damages ecosystems.",
+        "type": "premise",
+        "stance": "con"
+      }
+    },
+    {
+      "data": {
+        "id": "Most EVs are charged with electricity generated from fossil fuels.",
+        "type": "premise",
+        "stance": "con"
+      }
+    },
+    {
+      "data": {
+        "id": "AI-generated images mimic style but lack original thought.",
+        "type": "premise",
+        "stance": "con"
+      }
+    },
+    {
+      "data": {
+        "id": "AI-generated art is not true creativity.",
+        "type": "claim",
+        "stance": "neutral"
+      }
+    },
+    {
+      "data": {
+        "id": "People working remotely often report fewer distractions and better focus.",
+        "type": "premise",
+        "stance": "pro"
+      }
+    },
+    {
+      "data": {
+        "id": "Remote work improves employee productivity.",
+        "type": "claim",
+        "stance": "neutral"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "source": "EVs have zero tailpipe emissions.",
+        "target": "Electric vehicles are better for the environment.",
+        "label": "pro"
+      }
+    },
+    {
+      "data": {
+        "source": "EV battery mining damages ecosystems.",
+        "target": "Electric vehicles are better for the environment.",
+        "label": "con"
+      }
+    },
+    {
+      "data": {
+        "source": "Most EVs are charged with electricity generated from fossil fuels.",
+        "target": "Electric vehicles are better for the environment.",
+        "label": "con"
+      }
+    },
+    {
+      "data": {
+        "source": "AI-generated images mimic style but lack original thought.",
+        "target": "AI-generated art is not true creativity.",
+        "label": "con"
+      }
+    },
+    {
+      "data": {
+        "source": "People working remotely often report fewer distractions and better focus.",
+        "target": "Remote work improves employee productivity.",
+        "label": "pro"
+      }
+    }
+  ]
+};
+
+    const stanceColor = {
+      pro: '#4CAF50',
+      con: '#F44336',
+      neutral: '#2196F3'
+    };
+
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: data,
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': function(ele) { return stanceColor[ele.data('stance')]; },
+            'label': 'data(id)',
+            'shape': function(ele) { return ele.data('type') === 'claim' ? 'ellipse' : 'roundrectangle'; },
+            'text-wrap': 'wrap',
+            'text-max-width': 200,
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'font-size': 14,
+            'color': '#fff',
+            'text-outline-width': 2,
+            'text-outline-color': '#333',
+            'padding': '10px',
+            'width': function(ele) { return Math.max(100, ele.data('id').length * 6); },
+            'height': function(ele) {
+              const lines = Math.ceil(ele.data('id').length / 25);
+              return lines * 25;
+            }
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'curve-style': 'bezier',
+            'target-arrow-shape': 'triangle',
+            'line-color': function(ele) { return stanceColor[ele.data('label')]; },
+            'target-arrow-color': function(ele) { return stanceColor[ele.data('label')]; },
+            'label': 'data(label)',
+            'font-size': 11,
+            'color': '#000',
+            'text-wrap': 'wrap',
+            'text-background-opacity': 1,
+            'text-background-color': '#fff',
+            'text-background-padding': '4px',
+            'text-margin-y': -5
+          }
+        }
+      ],
+      layout: {
+        name: 'cose',
+        padding: 30
+      }
+    });
+  </script>
+</body>
+</html>
